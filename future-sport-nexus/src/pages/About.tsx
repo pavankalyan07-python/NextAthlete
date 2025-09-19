@@ -35,7 +35,7 @@ const athletes = [
     time: '26.24s',
     location: 'Delhi',
     image: 'https://media.istockphoto.com/id/487264370/photo/female-frestyle-swimmer.jpg?s=612x612&w=0&k=20&c=x69ScEXF3DsUl-kxtXjfT6kNjbUGC7Sam3UaMt8LN-I=',
-    //icon: <Activity className="w-6 h-6" />,
+    icon: <Activity className="w-6 h-6" />,
     verified: true
   },
   {
