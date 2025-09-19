@@ -3,17 +3,17 @@ import { Link, useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
+ import { 
   ArrowLeft,
   Play, 
   Upload, 
   Trophy,
-  Medal,
+   Medal,
   Star,
   Calendar,
   Clock,
-  Target,
-  Users
+   Target,
+   Users
 } from 'lucide-react';
 
 // Sample data for demonstration

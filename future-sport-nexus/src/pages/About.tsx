@@ -24,7 +24,7 @@ const athletes = [
     time: '10.24s',
     location: 'Mumbai, Maharashtra',
     image: 'https://compedgept.com/wp-content/uploads/2021/10/1.jpg',
-    icon: <Zap className="w-6 h-6" />,
+    //icon: <Zap className="w-6 h-6" />,
     verified: true
   },
   {
@@ -35,7 +35,7 @@ const athletes = [
     time: '26.24s',
     location: 'Delhi',
     image: 'https://media.istockphoto.com/id/487264370/photo/female-frestyle-swimmer.jpg?s=612x612&w=0&k=20&c=x69ScEXF3DsUl-kxtXjfT6kNjbUGC7Sam3UaMt8LN-I=',
-    icon: <Activity className="w-6 h-6" />,
+    //icon: <Activity className="w-6 h-6" />,
     verified: true
   },
   {
@@ -46,7 +46,7 @@ const athletes = [
     reps: '65 reps',
     location: 'Punjab',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCaRyzDoDTm8byZkweIb9gaKC4hCckonfKrA&s',
-    icon: <Target className="w-6 h-6" />,
+    //icon: <Target className="w-6 h-6" />,
     verified: true
   },
   {
@@ -57,7 +57,7 @@ const athletes = [
     distance: '2.45m',
     location: 'Pune, Maharashtra',
     image: 'https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_xl_2x/f_auto/primary/eldly7wucpp7eh3n3h6h',
-    icon: <Medal className="w-6 h-6" />,
+    //icon: <Medal className="w-6 h-6" />,
     verified: true
   },
   {
@@ -79,7 +79,7 @@ const athletes = [
     height: '1.65m',
     location: 'Haryana',
     image: 'https://media.gettyimages.com/id/107151888/photo/sahana-kumari-of-india-competes-in-the-w.jpg?s=1024x1024&w=gi&k=20&c=e522Ur--XKoMnYmTC25Vs5Ni3XovFJ8ClPPgJ-GvS9E=',
-    icon: <Star className="w-6 h-6" />,
+    //icon: <Star className="w-6 h-6" />,
     verified: true
   }
 ];
