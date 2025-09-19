@@ -57,7 +57,7 @@ const athletes = [
     distance: '2.45m',
     location: 'Pune, Maharashtra',
     image: 'https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_xl_2x/f_auto/primary/eldly7wucpp7eh3n3h6h',
-    //icon: <Medal className="w-6 h-6" />,
+    icon: <Medal className="w-6 h-6" />,
     verified: true
   },
   {
