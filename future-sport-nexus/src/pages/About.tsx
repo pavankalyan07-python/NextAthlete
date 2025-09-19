@@ -23,7 +23,7 @@ const athletes = [
     achievement: 'National 100m Sprint Champion 2024',
     time: '10.24s',
     location: 'Mumbai, Maharashtra',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://compedgept.com/wp-content/uploads/2021/10/1.jpg',
     icon: <Zap className="w-6 h-6" />,
     verified: true
   },
@@ -34,7 +34,7 @@ const athletes = [
     achievement: 'State 50m Freestyle Record Holder',
     time: '26.24s',
     location: 'Delhi',
-    image: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://media.istockphoto.com/id/487264370/photo/female-frestyle-swimmer.jpg?s=612x612&w=0&k=20&c=x69ScEXF3DsUl-kxtXjfT6kNjbUGC7Sam3UaMt8LN-I=',
     icon: <Activity className="w-6 h-6" />,
     verified: true
   },
@@ -45,7 +45,7 @@ const athletes = [
     achievement: 'Regional Push-up Challenge Winner',
     reps: '65 reps',
     location: 'Punjab',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCaRyzDoDTm8byZkweIb9gaKC4hCckonfKrA&s',
     icon: <Target className="w-6 h-6" />,
     verified: true
   },
@@ -56,7 +56,7 @@ const athletes = [
     achievement: 'Youth Long Jump Champion',
     distance: '2.45m',
     location: 'Pune, Maharashtra',
-    image: 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_xl_2x/f_auto/primary/eldly7wucpp7eh3n3h6h',
     icon: <Medal className="w-6 h-6" />,
     verified: true
   },
@@ -67,7 +67,7 @@ const athletes = [
     achievement: 'State 1km Time Trial Winner',
     time: '1:28.45',
     location: 'Jaipur, Rajasthan',
-    image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://cdn.mos.cms.futurecdn.net/EP4BxAQN6UZ5tAN29UQZ77.jpg',
     icon: <Award className="w-6 h-6" />,
     verified: true
   },
@@ -78,7 +78,7 @@ const athletes = [
     achievement: 'Regional High Jump Record',
     height: '1.65m',
     location: 'Haryana',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://media.gettyimages.com/id/107151888/photo/sahana-kumari-of-india-competes-in-the-w.jpg?s=1024x1024&w=gi&k=20&c=e522Ur--XKoMnYmTC25Vs5Ni3XovFJ8ClPPgJ-GvS9E=',
     icon: <Star className="w-6 h-6" />,
     verified: true
   }
