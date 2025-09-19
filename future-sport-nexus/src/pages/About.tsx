@@ -62,7 +62,7 @@ const athletes = [
   },
   {
     id: 5,
-    name: 'Karan Gupta',
+    name: 'chiranjeevi',
     sport: 'Cycling',
     achievement: 'State 1km Time Trial Winner',
     time: '1:28.45',
