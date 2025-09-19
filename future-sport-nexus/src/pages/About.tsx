@@ -224,14 +224,14 @@ export default function About() {
                           style={{ backgroundImage: `url(${athlete.image})` }}
                         />
                         <div className="absolute top-4 right-4 flex items-center gap-2">
-                          <div className="w-10 h-10 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-md rounded-lg flex items-center justify-center">
+                          {/* <div className="w-10 h-10 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-md rounded-lg flex items-center justify-center">
                             {athlete.icon}
-                          </div>
-                          {athlete.verified && (
+                          </div> */}
+                          {/* {athlete.verified && (
                             <div className="w-10 h-10 bg-success/20 backdrop-blur-md rounded-lg flex items-center justify-center">
                               <Star className="w-5 h-5 text-success" />
                             </div>
-                          )}
+                          )} */}
                         </div>
                       </div>
 
