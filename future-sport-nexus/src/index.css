@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 21st.dev Sports Assessment - Futuristic Design System */
+
+@layer base {
+  :root {
+    /* Primary Theme - Light Orange */
+    --primary: 28 100% 50%; /* #FFA500 */
+    --primary-glow: 28 100% 60%;
+    --primary-foreground: 222 84% 5%;
+
+    /* Accent - Neon Blue */
+    --accent: 199 100% 50%; /* #00B3FF */
+    --accent-glow: 199 100% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    /* White Backgrounds */
+    --background: 0 0% 100%; /* Always White */
+    --surface: 0 0% 100%; /* Always White */
+    --foreground: 222 84% 5%; /* Dark text for contrast */
+
+    /* Glass Cards - Light Theme */
+    --glass-bg: 255 255 255 / 0.95;
+    --glass-border: 0 0% 0% / 0.08;
+    --glass-blur: blur(20px);
+
+    /* UI Elements - Light Theme */
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 222 84% 5%; /* Dark text */
+    --border: 217 20% 92%; /* Light borders */
+    --input: 0 0% 98%; /* Light input backgrounds */
+    --ring: 28 100% 50%;
+    
+    /* Status Colors */
+    --success: 120 60% 50%;
+    --warning: 38 92% 50%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Text Colors - Light Theme */
+    --muted: 217 20% 40%;
+    --muted-foreground: 217 20% 50%;
+
+  /* Spacing System - Heavy White Space */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 48px;
+  --space-xl: 80px;
+  --space-2xl: 128px;
+
+    /* Border Radius */
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+
+    /* Shadows */
+    --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-glow: 0 0 40px rgba(255, 165, 0, 0.3);
+    --shadow-accent-glow: 0 0 40px rgba(0, 179, 255, 0.3);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 300ms cubic-bezier(0.2, 0.9, 0.3, 1);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  }
+
+  .light {
+    /* Keep the same light theme variables - already white */
+    --background: 0 0% 100%;
+    --surface: 0 0% 100%;
+    --foreground: 217 37% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 217 37% 10%;
+    --border: 217 20% 92%;
+    --input: 217 20% 95%;
+    --glass-bg: 255 255 255 / 0.95;
+    --glass-border: 0 0% 0% / 0.08;
+    --muted: 217 20% 60%;
+    --muted-foreground: 217 20% 40%;
+  }
+
+  .dark {
+    /* Force dark mode to also use white backgrounds */
+    --background: 0 0% 100%;
+    --surface: 0 0% 100%;
+    --foreground: 217 37% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 217 37% 10%;
+    --border: 217 20% 92%;
+    --input: 217 20% 95%;
+    --glass-bg: 255 255 255 / 0.95;
+    --glass-border: 0 0% 0% / 0.08;
+    --muted: 217 20% 60%;
+    --muted-foreground: 217 20% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Glassmorphism Base - Updated for white background */
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/95 border border-gray-200 shadow-lg;
+  }
+
+  .glass-button {
+    @apply backdrop-blur-xl bg-white/90 border border-gray-200 hover:bg-white/95 transition-all duration-300;
+  }
+
+  /* Glow Effects */
+  .glow-primary {
+    box-shadow: 0 0 40px rgba(255, 165, 0, 0.3);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 40px rgba(0, 179, 255, 0.3);
+  }
+
+  /* Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 20px rgba(255, 165, 0, 0.3); }
+    to { box-shadow: 0 0 40px rgba(255, 165, 0, 0.6); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Curved Sections */
+  .curve-top {
+    clip-path: ellipse(100% 100% at 50% 0%);
+  }
+
+  .curve-bottom {
+    clip-path: ellipse(100% 100% at 50% 100%);
+  }
+
+  .curve-both {
+    clip-path: ellipse(100% 55% at 48% 44%);
+  }
+
+  /* Heavy Spacing Utilities */
+  .section-spacing {
+    @apply py-20 md:py-32 lg:py-40;
+  }
+
+  .content-spacing {
+    @apply space-y-16 md:space-y-24 lg:space-y-32;
+  }
+
+  .heavy-spacing {
+    @apply px-6 md:px-12 lg:px-24;
+  }
+
+  /* Enhanced Glass Effects - Updated for white background */
+  .glass-card-enhanced {
+    @apply backdrop-blur-2xl bg-white/95 border border-gray-200 shadow-lg rounded-2xl;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:scale-105 hover:-translate-y-2;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
