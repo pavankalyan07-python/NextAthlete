@@ -46,7 +46,7 @@ const athletes = [
     reps: '65 reps',
     location: 'Punjab',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCaRyzDoDTm8byZkweIb9gaKC4hCckonfKrA&s',
-    //icon: <Target className="w-6 h-6" />,
+    icon: <Target className="w-6 h-6" />,
     verified: true
   },
   {
