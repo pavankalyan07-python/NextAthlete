@@ -197,14 +197,14 @@ export default function Login() {
                       className="w-full"
                     />
                   
-                    <Button
+                    {/* <Button
                       type="button"
                       variant="ghost"
                       onClick={handleOtpLogin}
                       className="w-full text-primary hover:text-primary-glow"
                     >
                       Login with OTP
-                    </Button>
+                    </Button> */}
                 </div>
 
                 {/* Sign Up Link */}
