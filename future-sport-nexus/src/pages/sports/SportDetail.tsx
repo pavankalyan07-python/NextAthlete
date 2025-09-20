@@ -13,7 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
   Calendar,
   Clock,
    Target,
-   Users
+   Users,
+   Video
 } from 'lucide-react';
 
 // Sample data for demonstration
@@ -288,30 +289,29 @@ export default function SportDetail() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
                       <Upload className="w-6 h-6 text-primary" />
-                      Upload Your Video
+                       Start recording
+
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
                       {!selectedFile ? (
                         <>
-                          <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                          <p className="text-muted-foreground mb-4">
-                            Select your video file (.mp4/.mov, max 200MB)
-                          </p>
-                          <input
-                            type="file"
-                            accept="video/mp4,video/mov"
-                            onChange={handleFileSelect}
-                            className="hidden"
-                            id="video-upload"
-                          />
-                          <label htmlFor="video-upload">
-                            <Button className="cursor-pointer">
-                              Choose File
-                            </Button>
+                         <Video className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+
+<p className="text-muted-foreground mb-4">
+  Click "Start Recording" to capture your performance
+</p>
+
+
+
+                         <label htmlFor="video-upload">
+                            <Button className="flex items-center gap-2">
+  <Video className="w-5 h-5" />
+  record video
+</Button>
                           </label>
-                        </>
+                        </>
                       ) : (
                         <div className="space-y-4">
                           <p className="font-medium">{selectedFile.name}</p>
