@@ -24,7 +24,7 @@ const athletes = [
     time: '10.24s',
     location: 'Mumbai, Maharashtra',
     image: 'https://compedgept.com/wp-content/uploads/2021/10/1.jpg',
-    icon: <Zap className="w-6 h-6" />,
+    //icon: <Zap className="w-6 h-6" />,
     verified: true
   },
   {
@@ -62,7 +62,7 @@ const athletes = [
   },
   {
     id: 5,
-    name: 'Karan Gupta',
+    name: 'chiranjeevi',
     sport: 'Cycling',
     achievement: 'State 1km Time Trial Winner',
     time: '1:28.45',
@@ -79,7 +79,7 @@ const athletes = [
     height: '1.65m',
     location: 'Haryana',
     image: 'https://media.gettyimages.com/id/107151888/photo/sahana-kumari-of-india-competes-in-the-w.jpg?s=1024x1024&w=gi&k=20&c=e522Ur--XKoMnYmTC25Vs5Ni3XovFJ8ClPPgJ-GvS9E=',
-    icon: <Star className="w-6 h-6" />,
+    //icon: <Star className="w-6 h-6" />,
     verified: true
   }
 ];
