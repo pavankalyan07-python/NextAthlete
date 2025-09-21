@@ -442,7 +442,7 @@ export default function SignUp() {
                         <p className="text-xs text-muted-foreground">
                           Required for AI analysis and performance assessment.
                         </p>
-                        <Button
+                        {/* <Button
                           type="button"
                           variant="ghost"
                           size="sm"
@@ -450,7 +450,7 @@ export default function SignUp() {
                         >
                           <Info className="w-3 h-3 mr-1" />
                           Why we need this?
-                        </Button>
+                        </Button> */}
                       </div>
                     </div>
                   </div>

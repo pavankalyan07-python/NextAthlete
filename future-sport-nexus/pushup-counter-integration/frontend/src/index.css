@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: normal;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.text-muted-foreground {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.bg-primary {
+    background-color: #3b82f6;
+}
+
+.bg-accent {
+    background-color: #fbbf24;
+}
+
+.border-border {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.border-accent {
+    border-color: #fbbf24;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.space-y-4 > * + * {
+    margin-top: 1rem;
+}
+
+.space-y-6 > * + * {
+    margin-top: 1.5rem;
+}
+
+.space-y-8 > * + * {
+    margin-top: 2rem;
+}
+
+.aspect-video {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 */
+}
+
+.aspect-video > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}

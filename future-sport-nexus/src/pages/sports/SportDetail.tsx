@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef,useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -154,6 +154,30 @@ export default function SportDetail() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   
+  function handleUpload() {
+    if (selectedFile) {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        setUploadProgress(progress);
+        if (progress >= 100) {
+          clearInterval(interval);
+          alert('Video uploaded successfully! It will be processed and added to your uploads.');
+          setSelectedFile(null);
+          setUploadProgress(0);
+        }
+      }, 200);
+    }
+  }
+  
+  const [repCount, setRepCount] = useState<number | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [lastFeedback, setLastFeedback] = useState<{ repCount: number } | null>(null);
+  
+const videoRef = useRef<HTMLVideoElement>(null);
+const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+const videoChunks = useRef<Blob[]>([]);
+
   const sport = sportSlug ? sportsData[sportSlug] : null;
   
   if (!sport) {
@@ -169,39 +193,96 @@ export default function SportDetail() {
     );
   }
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // Validate file type and size
-      if (!file.type.includes('video/')) {
-        alert('Please select a video file');
-        return;
-      }
-      if (file.size > 200 * 1024 * 1024) { // 200MB
-        alert('File size must be less than 200MB');
-        return;
-      }
-      setSelectedFile(file);
-    }
-  };
+  // const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     // Validate file type and size
+  //     if (!file.type.includes('video/')) {
+  //       alert('Please select a video file');
+  //       return;
+  //     }
+  //     if (file.size > 200 * 1024 * 1024) { // 200MB
+  //       alert('File size must be less than 200MB');
+  //       return;
+  //     }
+  //     setSelectedFile(file);
+  //   }
+  // };
 
-  const handleUpload = () => {
-    if (selectedFile) {
-      // Simulate upload progress
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 10;
-        setUploadProgress(progress);
-        if (progress >= 100) {
-          clearInterval(interval);
-          alert('Video uploaded successfully! It will be processed and added to your uploads.');
-          setSelectedFile(null);
-          setUploadProgress(0);
-        }
-      }, 200);
-    }
-  };
+  //  const handleStartRecording = async () => {
+  //   setIsRecording(true);
+  //   try {
+  //     const response = await fetch('/api/recording/start-recording', { method: 'POST' });
+  //     if (!response.ok) throw new Error('Request failed');
+  //     const data = await response.json();
+  //     setRepCount(data.repCount);
+  //   } catch (error) {
+  //     console.error('Error running recording:', error);
+  //   }
+  //   setIsRecording(false);
+  // };
 
+  // const handleUpload = () => {
+  //   if (selectedFile) {
+  //     // Simulate upload progress
+  //     let progress = 0;
+  //     const interval = setInterval(() => {
+  //       progress += 10;
+  //       setUploadProgress(progress);
+  //       if (progress >= 100) {
+  //         clearInterval(interval);
+  //         alert('Video uploaded successfully! It will be processed and added to your uploads.');
+  //         setSelectedFile(null);
+  //         setUploadProgress(0);
+  //       }
+  //     }, 200);
+  //   }
+  // };
+
+  async function handleStartRecording(): Promise<void> {
+    setRepCount(null);
+    setIsRecording(true);
+    videoChunks.current = [];
+
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    if (videoRef.current) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.play();
+    }
+
+    mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: "video/webm" });
+    mediaRecorderRef.current.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        videoChunks.current.push(event.data);
+      }
+    };
+    mediaRecorderRef.current.onstop = async () => {
+      const videoBlob = new Blob(videoChunks.current, { type: "video/webm" });
+      const formData = new FormData();
+      formData.append("video", videoBlob, "recording.webm");
+
+      try {
+        const response = await fetch("/api/pushup-count", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        setRepCount(data.repCount);
+        setLastFeedback({ repCount: data.repCount });
+      } catch (error) {
+        alert("Error processing video");
+      }
+      setIsRecording(false);
+      // Stop webcam stream
+      stream.getTracks().forEach((track) => track.stop());
+    };
+
+    mediaRecorderRef.current.start();
+    // Automatically stop after 10 seconds (or let user stop manually)
+    setTimeout(() => {
+      mediaRecorderRef.current?.stop();
+    }, 10000); // 10 seconds
+  }
   const getBadgeIcon = (badge: string | null) => {
     switch (badge) {
       case 'gold': return <Trophy className="w-5 h-5 text-yellow-500" />;
@@ -284,97 +365,108 @@ export default function SportDetail() {
 
               {/* Upload & Leaderboard */}
               <div className="space-y-8">
-                {/* Video Upload */}
-                <Card className="glass-card-enhanced">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3">
-                      <Upload className="w-6 h-6 text-primary" />
-                       Start recording
-
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-                      {!selectedFile ? (
-                        <>
-                         <Video className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-
-<p className="text-muted-foreground mb-4">
-  Click "Start Recording" to capture your performance
-</p>
-
-
-
-                         <label htmlFor="video-upload">
-                            <Button className="flex items-center gap-2">
+        {/* Video Upload & Recording */}
+        <Card className="glass-card-enhanced">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <Upload className="w-6 h-6 text-primary" />
+              Record or Upload Video
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+              {!selectedFile ? (
+                <>
+                  <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+                    {/* Recording Option */}
+                    <div className="flex-1 flex flex-col items-center">
+                      <Video className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-muted-foreground mb-2">
+                        Record your performance
+                      </p>
+                      <video
+  ref={videoRef}
+  width={320}
+  height={240}
+  autoPlay
+  muted
+  style={{ margin: "0 auto", display: "block", borderRadius: 8, border: "2px solid #ccc" }}
+/>
+<Button
+  onClick={handleStartRecording}
+  disabled={isRecording}
+  className="flex items-center gap-2"
+>
   <Video className="w-5 h-5" />
-  record video
+  {isRecording ? "Recording..." : "Start Recording"}
 </Button>
-                          </label>
-                        </>
-                      ) : (
-                        <div className="space-y-4">
-                          <p className="font-medium">{selectedFile.name}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                          </p>
-                          {uploadProgress > 0 && (
-                            <div className="w-full bg-secondary rounded-full h-2">
-                              <div 
-                                className="bg-primary h-2 rounded-full transition-all duration-300"
-                                style={{ width: `${uploadProgress}%` }}
-                              />
-                            </div>
-                          )}
-                          <div className="flex gap-2">
-                            <Button onClick={handleUpload} disabled={uploadProgress > 0}>
-                              {uploadProgress > 0 ? `Uploading... ${uploadProgress}%` : 'Upload Video'}
-                            </Button>
-                            <Button variant="outline" onClick={() => setSelectedFile(null)}>
-                              Cancel
-                            </Button>
-                          </div>
-                        </div>
+                      {repCount !== null && (
+                        <p className="mt-1 text-base font-medium">
+                          Reps Counted: {repCount}
+                        </p>
                       )}
                     </div>
-                  </CardContent>
-                </Card>
-
-                {/* Leaderboard */}
-                <Card className="glass-card-enhanced">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3">
-                      <Trophy className="w-6 h-6 text-primary" />
-                      Male Leaderboard
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {leaderboardData.male.map((athlete) => (
-                        <div 
-                          key={athlete.rank}
-                          className={`flex items-center justify-between p-4 rounded-lg transition-colors ${
-                            athlete.rank <= 3 ? 'bg-primary/10 border border-primary/20' : 'bg-secondary/50'
-                          }`}
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-2">
-                              <span className="font-bold text-lg">#{athlete.rank}</span>
-                              {getBadgeIcon(athlete.badge)}
-                            </div>
-                            <div>
-                              <p className="font-semibold">{athlete.name}</p>
-                              <p className="text-sm text-muted-foreground">{athlete.location}</p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-bold text-lg text-primary">{athlete.score}</p>
-                          </div>
-                        </div>
-                      ))}
+                    {/* Upload Option */}
+                    {/* <div className="flex-1 flex flex-col items-center">
+                      <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-muted-foreground mb-2">
+                        Or upload a video file (.mp4/.mov, max 200MB)
+                      </p>
+                      <input
+                        type="file"
+                        accept="video/mp4,video/mov"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                        id="video-upload-male"
+                      />
+                      <label htmlFor="video-upload-male">
+                        <Button className="cursor-pointer">
+                          Choose File
+                        </Button>
+                      </label>
+                    </div> */}
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-4">
+                  <p className="font-medium">{selectedFile.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                  {uploadProgress > 0 && (
+                    <div className="w-full bg-secondary rounded-full h-2">
+                      <div 
+                        className="bg-primary h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
                     </div>
-                  </CardContent>
-                </Card>
+                  )}
+                  {/* <div className="flex gap-2">
+                    <Button onClick={handleUpload} disabled={uploadProgress > 0}>
+                      {uploadProgress > 0 ? `Uploading... ${uploadProgress}%` : 'Upload Video'}
+                    </Button>
+                    <Button variant="outline" onClick={() => setSelectedFile(null)}>
+                      Cancel
+                    </Button>
+                  </div> */}
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+        {lastFeedback && (
+  <Card className="glass-card-enhanced mt-6">
+    <CardHeader>
+      <CardTitle>Feedback for Last Video</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-lg font-semibold">
+        Push-up Count: {lastFeedback.repCount}
+      </p>
+      {/* Add more feedback details here if needed */}
+    </CardContent>
+  </Card>
+)}
               </div>
             </div>
 
@@ -453,34 +545,67 @@ export default function SportDetail() {
 
               {/* Upload & Leaderboard */}
               <div className="space-y-8">
-                {/* Video Upload */}
+                {/* Video Upload & Recording */}
                 <Card className="glass-card-enhanced">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
                       <Upload className="w-6 h-6 text-primary" />
-                      Upload Your Video
+                      Record or Upload Video
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
                       {!selectedFile ? (
                         <>
-                          <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                          <p className="text-muted-foreground mb-4">
-                            Select your video file (.mp4/.mov, max 200MB)
-                          </p>
-                          <input
-                            type="file"
-                            accept="video/mp4,video/mov"
-                            onChange={handleFileSelect}
-                            className="hidden"
-                            id="video-upload-female"
-                          />
-                          <label htmlFor="video-upload-female">
-                            <Button className="cursor-pointer">
-                              Choose File
-                            </Button>
-                          </label>
+                          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+                            {/* Recording Option */}
+                            <div className="flex-1 flex flex-col items-center">
+                              <Video className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                              <p className="text-muted-foreground mb-2">
+                                Record your performance
+                              </p>
+                              <video
+  ref={videoRef}
+  width={320}
+  height={240}
+  autoPlay
+  muted
+  style={{ margin: "0 auto", display: "block", borderRadius: 8, border: "2px solid #ccc" }}
+/>
+<Button
+  onClick={handleStartRecording}
+  disabled={isRecording}
+  className="flex items-center gap-2"
+>
+  <Video className="w-5 h-5" />
+  {isRecording ? "Recording..." : "Start Recording"}
+</Button>
+                              {repCount !== null && (
+                                <p className="mt-1 text-base font-medium">
+                                  Reps Counted: {repCount}
+                                </p>
+                              )}
+                            </div>
+                            {/* Upload Option */}
+                            {/* <div className="flex-1 flex flex-col items-center">
+                              <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                              <p className="text-muted-foreground mb-2">
+                                Or upload a video file (.mp4/.mov, max 200MB)
+                              </p>
+                              <input
+                                type="file"
+                                accept="video/mp4,video/mov"
+                                onChange={handleFileSelect}
+                                className="hidden"
+                                id="video-upload-female"
+                              />
+                              <label htmlFor="video-upload-female">
+                                <Button className="cursor-pointer">
+                                  Choose File
+                                </Button>
+                              </label>
+                            </div> */}
+                          </div>
                         </>
                       ) : (
                         <div className="space-y-4">
